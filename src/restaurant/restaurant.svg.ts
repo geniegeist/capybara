@@ -1,3 +1,4 @@
+import escapeXML from '../util/escapeXML';
 import {
   RestaurantSVGFactory as Factory,
   Restaurant,
@@ -9,7 +10,7 @@ export const RestaurantSVGFactory: Factory = {
       <svg width="500px" height="${
         restaurants.length * 70
       }px" xmlns="http://www.w3.org/2000/svg">
-        <foreignobject width="100%" height="${restaurants.length * 70}px">
+        <foreignObject width="100%" height="${restaurants.length * 70}px">
           <div xmlns="http://www.w3.org/1999/xhtml"> 
             <style> 
               .container {
@@ -30,9 +31,11 @@ export const RestaurantSVGFactory: Factory = {
               ${restaurants
                 .map((restaurant) => {
                   return `
-                  <div style="background-color: white; height: 70px;">
-                    <div style="display: flex; flex-direction: row;">
-                      <p style="font-weight: 500">${restaurant.name}</p>
+                  <div style="background-color: white; height: 70px; padding: 4px;">
+                    <div style="display: flex; flex-direction: row; ">
+                      <p style="font-weight: 500">${escapeXML(
+                        restaurant.name
+                      )}</p>
                       <div style="margin-left: auto; display: flex; flex-direction: row;">
                         <p>${restaurant.rating.starRating}</p>
                         <div>
@@ -40,11 +43,11 @@ export const RestaurantSVGFactory: Factory = {
                         </div>
                       </div>
                     </div>
-                    <p>${restaurant.address.firstLine}, ${
+                    <p>${escapeXML(restaurant.address.firstLine)}, ${escapeXML(
                     restaurant.address.city
-                  } ${restaurant.address.postalCode}</p>
+                  )} ${restaurant.address.postalCode}</p>
                     <p>${restaurant.cuisines
-                      .map((cuisine) => cuisine.name)
+                      .map((cuisine) => escapeXML(cuisine.name))
                       .join(', ')}</p>
                   </div>
                 `;
@@ -52,7 +55,7 @@ export const RestaurantSVGFactory: Factory = {
                 .join('')}
             </div>
           </div>
-        </foreignobject>
+        </foreignObject>
       </svg>
     `;
   },
