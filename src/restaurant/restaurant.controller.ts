@@ -15,6 +15,7 @@ export const svgRestaurantsByPostalCode: RequestHandler = async (req, res) => {
     }
     const svg = RestaurantSVGFactory.create(data.restaurants);
     res.setHeader('Content-Type', 'image/svg+xml');
+    res.setHeader('Cache-Control', 'public, max-age=60');
     res.send(svg);
   } catch (e: any) {
     if (e instanceof InvalidPostcalCodeError) {
