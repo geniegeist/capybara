@@ -1,4 +1,4 @@
-# Just Eat Takeaway Assignment
+# Assignment
 
 **Functional requirements:**
 
