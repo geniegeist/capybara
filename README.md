@@ -1,14 +1,15 @@
-# Assignment
+# README Restaurants
 
-**Functional requirements:**
+This is a simple REST API that allows you to embed restaurants into your Github README.
 
-- Display restaurant data by postal code
-  - Name
-  - Cuisines
-  - Rating (as a number)
-  - Address
+Endpoint: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/:postal_code/svg`
 
-**Non-Functional requirements:**
+Usage:
 
-- Unknown?
-- Focus on displaying the data
+```
+![Restaurants for postal code EC4M7RF](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/EC4M7RF/svg)
+```
+
+## Demo
+
+![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/EC4M7RF/svg)
