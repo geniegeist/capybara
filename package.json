@@ -1,0 +1,22 @@
+{
+  "name": "jet-takehome-assignment",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "dev": "ts-node-dev --no-notify --respawn --transpile-only src/server",
+    "build": "tsc"
+  },
+  "author": "Viet Duc Nguyen",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2"
+  }
+}
