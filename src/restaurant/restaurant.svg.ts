@@ -14,7 +14,6 @@ export const RestaurantSVGFactory: Factory = {
           <div xmlns="http://www.w3.org/1999/xhtml"> 
             <style> 
               .container {
-                background-color: red;
                 border-radius: 8px;
                 font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
                 font-weight: normal;
