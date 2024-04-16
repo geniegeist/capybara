@@ -6,6 +6,7 @@
     "check": "tsc --noEmit",
     "dev": "ts-node-dev --no-notify --respawn --transpile-only src/server",
     "build": "tsc",
+    "start": "node dist/server",
     "test": "vitest -c ./vitest.config.ts --silent=false"
   },
   "author": "Viet Duc Nguyen",
