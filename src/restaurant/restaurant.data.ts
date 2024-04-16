@@ -41,17 +41,32 @@ export default class RestaurantData implements RestaurantDataFetcher {
     this.httpClient = httpClient;
   }
 
-  async getRestaurantsByPostalCode(postalCode: string) {
+  async getRestaurantsByPostalCode(postalCode: string, limit = 10) {
     return this.httpClient
       .get<RestaurantsByPostalCodeResponse>(
         `https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/${postalCode}`
       )
       .then((response) => {
         const res: GetRestaurantsByPostalCodeResult = {
-          restaurants: response.data.restaurants.slice(0, 10),
+          restaurants: response.data.restaurants.slice(0, limit),
         };
 
         return res;
+      })
+      .catch((error: any) => {
+        if (error.response) {
+          if (error.response.status === 404) {
+            // TO-DO: error handling
+          }
+        }
+
+        throw error;
       });
+  }
+}
+
+export class InvalidPostcalCodeError extends Error {
+  constructor() {
+    super('Invalid postal code');
   }
 }

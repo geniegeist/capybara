@@ -29,3 +29,7 @@ export interface RestaurantDataFetcher {
     postalCode: string
   ) => Promise<GetRestaurantsByPostalCodeResult>;
 }
+
+export interface RestaurantSVGFactory {
+  create: (restaurants: Restaurant[]) => string;
+}

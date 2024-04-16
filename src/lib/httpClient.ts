@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { HttpClientFactory } from '../types/http-client';
+import { HttpClientFactory as Factory } from '../types/http-client';
 
-const factory: HttpClientFactory = {
+const HttpClientFactory: Factory = {
   create: () => {
     return axios;
   },
 };
 
-export default factory;
+export default HttpClientFactory;
