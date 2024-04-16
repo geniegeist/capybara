@@ -5,7 +5,8 @@
   "scripts": {
     "check": "tsc --noEmit",
     "dev": "ts-node-dev --no-notify --respawn --transpile-only src/server",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "vitest -c ./vitest.config.ts --silent=false"
   },
   "author": "Viet Duc Nguyen",
   "license": "ISC",
@@ -13,9 +14,11 @@
     "@types/express": "^4.17.21",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.0"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "body-parser": "^1.20.2",
     "express": "^4.19.2"
   }
