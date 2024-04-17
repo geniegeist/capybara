@@ -3,6 +3,8 @@ import RestaurantData, { InvalidPostcalCodeError } from './restaurant.data';
 import HttpClientFactory from '../lib/httpClient';
 import { RestaurantSVGFactory } from './restaurant.svg';
 
+const CACHE_MAX_AGE = process.env.CACHE_MAX_AGE ?? 60;
+
 export const svgRestaurantsByPostalCode: RequestHandler = async (req, res) => {
   const postalCode = req.params.postalCode;
   const fetcher = new RestaurantData(HttpClientFactory.create());
@@ -15,7 +17,9 @@ export const svgRestaurantsByPostalCode: RequestHandler = async (req, res) => {
     }
     const svg = RestaurantSVGFactory.create(data.restaurants);
     res.setHeader('Content-Type', 'image/svg+xml');
-    res.setHeader('Cache-Control', 'public, max-age=60');
+    if (CACHE_MAX_AGE) {
+      res.setHeader('Cache-Control', `public, max-age=${CACHE_MAX_AGE}`);
+    }
     res.send(svg);
   } catch (e: any) {
     if (e instanceof InvalidPostcalCodeError) {
