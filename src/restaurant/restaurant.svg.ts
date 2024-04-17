@@ -1,3 +1,4 @@
+import cuisineToEmoji from '../util/cuisineToEmoji';
 import escapeXML from '../util/escapeXML';
 import {
   RestaurantSVGFactory as Factory,
@@ -8,31 +9,67 @@ export const RestaurantSVGFactory: Factory = {
   create(restaurants: Restaurant[]): string {
     return `
       <svg width="500px" height="${
-        restaurants.length * 70
+        restaurants.length * 90 + 20
       }px" xmlns="http://www.w3.org/2000/svg">
-        <foreignObject width="100%" height="100%">
-          <div xmlns="http://www.w3.org/1999/xhtml"> 
+        <foreignObject width="100%" height="${restaurants.length * 90 + 20}px">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="height: 100%;"> 
             <style> 
+              @keyframes fadeInUp {
+                from {
+                  opacity: 0;
+                  transform: translate3d(0, 40%, 0);
+                }
+                to {
+                  opacity: 1;
+                  transform: none;
+                }
+              }
+
               .container {
                 border-radius: 8px;
-                font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-                font-weight: normal;
+font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+                font-weight: 500;
                 font-size: 12px;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
               }
 
               .container p {
                 margin: 0;
                 padding: 0;
               }
+
+              .item {
+                padding: 0.5em 1em;
+                opacity: 0;
+              }
+
+              .item.animated {
+                animation-name: fadeInUp;
+                animation-duration: 0.75s;
+                animation-fill-mode: forwards;
+              }
+
+              ${restaurants
+                .map(
+                  (_, i) =>
+                    `.item.animated:nth-child(${i + 1}) { animation-delay: ${
+                      i * 0.2
+                    }s; }`
+                )
+                .join('')}
             </style>
 
             <div class="container">
               ${restaurants
                 .map((restaurant) => {
                   return `
-                  <div style="background-color: white; height: 70px; padding: 0 1em;">
-                    <div style="display: flex; flex-direction: row; ">
-                      <p style="font-weight: 500">${escapeXML(
+                  <div class="item animated">
+                    <div style="display: flex; flex-direction: row;">
+                      <p style="font-weight: bold;">${escapeXML(
                         restaurant.name
                       )}</p>
                       <div style="margin-left: auto; display: flex; flex-direction: row;">
@@ -42,12 +79,23 @@ export const RestaurantSVGFactory: Factory = {
                         </div>
                       </div>
                     </div>
-                    <p>${escapeXML(restaurant.address.firstLine)}, ${escapeXML(
-                    restaurant.address.city
-                  )} ${restaurant.address.postalCode}</p>
-                    <p>${restaurant.cuisines
-                      .map((cuisine) => escapeXML(cuisine.name))
-                      .join(', ')}</p>
+                    <p style="color: rgba(0,0,0,0.8);">${escapeXML(
+                      restaurant.address.firstLine
+                    )}, ${escapeXML(restaurant.address.city)} ${
+                    restaurant.address.postalCode
+                  }</p>
+                    <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 4px; align-items: stretch; margin-top: 4px;">${restaurant.cuisines
+                      .map(
+                        (cuisine) =>
+                          `<span style="font-size: 0.8em; color: rgba(0,0,0,0.8); background-color: #efefef; padding: 4px; border-radius: 1em; display: flex; align-items: center;">${escapeXML(
+                            cuisine.name
+                          )}${
+                            cuisineToEmoji(cuisine.uniqueName)
+                              ? ` ${cuisineToEmoji(cuisine.uniqueName)}`
+                              : ''
+                          }</span>`
+                      )
+                      .join('')}</div>
                   </div>
                 `;
                 })
