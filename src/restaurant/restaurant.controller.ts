@@ -4,10 +4,11 @@ import HttpClientFactory from '../lib/httpClient';
 import { RestaurantSVGFactory } from './restaurant.svg';
 
 const CACHE_MAX_AGE = process.env.CACHE_MAX_AGE ?? 60;
+const apiEndpoint = process.env.API_ENDPOINT!;
 
 export const svgRestaurantsByPostalCode: RequestHandler = async (req, res) => {
   const postalCode = req.params.postalCode;
-  const fetcher = new RestaurantData(HttpClientFactory.create());
+  const fetcher = new RestaurantData(HttpClientFactory.create(), apiEndpoint);
 
   try {
     const data = await fetcher.getRestaurantsByPostalCode(postalCode, 10);

@@ -36,16 +36,16 @@ type RestaurantsByPostalCodeResponse = {
 
 export default class RestaurantData implements RestaurantDataFetcher {
   httpClient: HttpClient;
+  apiEndpoint: string;
 
-  constructor(httpClient: HttpClient) {
+  constructor(httpClient: HttpClient, apiEndpoint: string) {
     this.httpClient = httpClient;
+    this.apiEndpoint = apiEndpoint;
   }
 
   async getRestaurantsByPostalCode(postalCode: string, limit = 10) {
     return this.httpClient
-      .get<RestaurantsByPostalCodeResponse>(
-        `https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/${postalCode}`
-      )
+      .get<RestaurantsByPostalCodeResponse>(`${this.apiEndpoint}/${postalCode}`)
       .then((response) => {
         const res: GetRestaurantsByPostalCodeResult = {
           restaurants: response.data.restaurants.slice(0, limit),
