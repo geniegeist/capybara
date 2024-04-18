@@ -18,11 +18,26 @@ Usage:
 
 ## Demo
 
-Want to try this out with your own postcode? Here is a playground for you: [Just create a new issue](https://github.com/geniegeist/capybara/issues/new/choose), enter the postcode and discover restaraunts while browsing for Github repository :) 
+Want to try this out with your own postcode? Here is a playground for you: [Just create a new issue](https://github.com/geniegeist/capybara/issues/new/choose), enter the postcode and discover restaraunts while browsing for Github repository :)
 
 ## Is this production ready?
 
-Sure, I truely believe this will revolutionize Github and turn it into a global food discovery service for hungry developers. 
+Sure, I truely believe this will revolutionize Github and turn it into a global food discovery service for hungry developers.
 
 ## Known issues
+
 - Only works with UK postcodes
+
+## API
+
+### Available parameters
+
+#### limit
+
+- number of restaurants to display
+- default is 10
+- max is 10
+
+Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/m11ag/svg?limit=1`
+
+![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/m11ag/svg?limit=1)

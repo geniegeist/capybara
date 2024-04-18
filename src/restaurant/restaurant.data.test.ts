@@ -11,4 +11,11 @@ describe('RestaurantData', async () => {
     const res = await fetcher.getRestaurantsByPostalCode('EC4M7RF');
     expect(res.restaurants.length).toBe(10);
   });
+
+  it('fetches 5 restaurants using limit', async () => {
+    const httpClient = HttpFactory.create();
+    const fetcher = new RestaurantData(httpClient, apiEndpoint);
+    const res = await fetcher.getRestaurantsByPostalCode('EC4M7RF', 5);
+    expect(res.restaurants.length).toBe(5);
+  });
 });
