@@ -31,7 +31,7 @@ Sure, I truely believe this will revolutionize Github and turn it into a global 
 - Animations ✅
 - Limit number of restaurants ✅
 - Order by rating ✅
-- Cache (to do)
+- Cache ✅
 
 ### Known issues
 

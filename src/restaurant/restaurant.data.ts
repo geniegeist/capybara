@@ -3,6 +3,7 @@ import type {
   GetRestaurantsByPostalCodeResult,
   RestaurantDataFetcher,
 } from './restaurant.types';
+import NodeCache from 'node-cache';
 
 type RestaurantPayload = {
   id: string;
@@ -37,10 +38,12 @@ type RestaurantsByPostalCodeResponse = {
 export default class RestaurantData implements RestaurantDataFetcher {
   httpClient: HttpClient;
   apiEndpoint: string;
+  cache: NodeCache; // TO-DO: independency injection for better unit testing
 
   constructor(httpClient: HttpClient, apiEndpoint: string) {
     this.httpClient = httpClient;
     this.apiEndpoint = apiEndpoint;
+    this.cache = new NodeCache({ stdTTL: 60 * 60 * 24 }); // 24 hours
   }
 
   async getRestaurantsByPostalCode(
@@ -48,30 +51,42 @@ export default class RestaurantData implements RestaurantDataFetcher {
     limit = 10,
     options?: { orderby?: string }
   ) {
+    const handleRestaurantsData = (payload: RestaurantPayload[]) => {
+      const restaurants = payload.slice(0, limit);
+
+      if (options?.orderby === 'rating') {
+        restaurants.sort((a, b) => {
+          if (a.rating.starRating === null) {
+            return 1;
+          }
+
+          if (b.rating.starRating === null) {
+            return -1;
+          }
+
+          return b.rating.starRating - a.rating.starRating;
+        });
+      }
+
+      const res: GetRestaurantsByPostalCodeResult = {
+        restaurants,
+      };
+
+      return res;
+    };
+
+    if (this.cache.has(postalCode.toLowerCase())) {
+      const payload = this.cache.get(
+        postalCode.toLowerCase()
+      ) as RestaurantPayload[];
+      return handleRestaurantsData(payload);
+    }
+
     return this.httpClient
       .get<RestaurantsByPostalCodeResponse>(`${this.apiEndpoint}/${postalCode}`)
       .then((response) => {
-        const restaurants = response.data.restaurants.slice(0, limit);
-
-        if (options?.orderby === 'rating') {
-          restaurants.sort((a, b) => {
-            if (a.rating.starRating === null) {
-              return 1;
-            }
-
-            if (b.rating.starRating === null) {
-              return -1;
-            }
-
-            return b.rating.starRating - a.rating.starRating;
-          });
-        }
-
-        const res: GetRestaurantsByPostalCodeResult = {
-          restaurants,
-        };
-
-        return res;
+        this.cache.set(postalCode.toLowerCase(), response.data.restaurants);
+        return handleRestaurantsData(response.data.restaurants);
       })
       .catch((error: any) => {
         if (error.response) {

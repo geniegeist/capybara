@@ -5,10 +5,10 @@ import { RestaurantSVGFactory } from './restaurant.svg';
 
 const CACHE_MAX_AGE = process.env.CACHE_MAX_AGE ?? 60;
 const apiEndpoint = process.env.API_ENDPOINT!;
+const fetcher = new RestaurantData(HttpClientFactory.create(), apiEndpoint);
 
 export const svgRestaurantsByPostalCode: RequestHandler = async (req, res) => {
   const postalCode = req.params.postalCode;
-  const fetcher = new RestaurantData(HttpClientFactory.create(), apiEndpoint);
   // TO-DO: validate limit
   const limit = req.query.limit ? parseInt(req.query.limit as string) : 10;
   const orderby = req.query.orderby as string | undefined;
