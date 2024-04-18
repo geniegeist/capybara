@@ -12,6 +12,7 @@ export const svgRestaurantsByPostalCode: RequestHandler = async (req, res) => {
   // TO-DO: validate limit
   const limit = req.query.limit ? parseInt(req.query.limit as string) : 10;
   const orderby = req.query.orderby as string | undefined;
+  const theme = req.query.theme as string | undefined;
 
   if (isNaN(limit)) {
     res.status(400).json({ message: 'Limit should be a number' });
@@ -38,7 +39,7 @@ export const svgRestaurantsByPostalCode: RequestHandler = async (req, res) => {
       res.status(404).json({ message: 'No restaurants found' });
       return;
     }
-    const svg = RestaurantSVGFactory.create(data.restaurants);
+    const svg = RestaurantSVGFactory.create(data.restaurants, { theme });
     res.setHeader('Content-Type', 'image/svg+xml');
     if (CACHE_MAX_AGE) {
       res.setHeader('Cache-Control', `public, max-age=${CACHE_MAX_AGE}`);

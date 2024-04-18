@@ -31,5 +31,5 @@ export interface RestaurantDataFetcher {
 }
 
 export interface RestaurantSVGFactory {
-  create: (restaurants: Restaurant[]) => string;
+  create: (restaurants: Restaurant[], options?: { theme?: string }) => string;
 }

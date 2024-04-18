@@ -1,12 +1,15 @@
 import cuisineToEmoji from '../util/cuisineToEmoji';
 import escapeXML from '../util/escapeXML';
+import RestaurantTheme from './restaurant.theme';
 import {
   RestaurantSVGFactory as Factory,
   Restaurant,
 } from './restaurant.types';
 
 export const RestaurantSVGFactory: Factory = {
-  create(restaurants: Restaurant[]): string {
+  create(restaurants, options): string {
+    const theme = RestaurantTheme[options?.theme ?? 'default'];
+
     return `
       <svg width="500px" height="${
         restaurants.length * 90 + 20
@@ -35,6 +38,8 @@ font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
                 flex-direction: column;
                 justify-content: space-around;
                 height: 100%;
+                background-color: ${theme.container.bgColor};
+                color: ${theme.primaryFontColor};
               }
 
               .container p {
@@ -73,21 +78,27 @@ font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
                         restaurant.name
                       )}</p>
                       <div style="margin-left: auto; display: flex; flex-direction: row;">
-                        <p>${restaurant.rating.starRating}</p>
+                        <p style="color: ${theme.starFontColor}">${
+                    restaurant.rating.starRating
+                  }</p>
                         <div>
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FF7F00" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="star"><rect width="24" height="24" transform="rotate(90 12 12)" opacity="0"/><path d="M17.56 21a1 1 0 0 1-.46-.11L12 18.22l-5.1 2.67a1 1 0 0 1-1.45-1.06l1-5.63-4.12-4a1 1 0 0 1-.25-1 1 1 0 0 1 .81-.68l5.7-.83 2.51-5.13a1 1 0 0 1 1.8 0l2.54 5.12 5.7.83a1 1 0 0 1 .81.68 1 1 0 0 1-.25 1l-4.12 4 1 5.63a1 1 0 0 1-.4 1 1 1 0 0 1-.62.18z"/></g></g></svg>
                         </div>
                       </div>
                     </div>
-                    <p style="color: rgba(0,0,0,0.8);">${escapeXML(
-                      restaurant.address.firstLine
-                    )}, ${escapeXML(restaurant.address.city)} ${
+                    <p style="color: ${theme.secondaryFontColor};">${escapeXML(
+                    restaurant.address.firstLine
+                  )}, ${escapeXML(restaurant.address.city)} ${
                     restaurant.address.postalCode
                   }</p>
                     <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 4px; align-items: stretch; margin-top: 4px;">${restaurant.cuisines
                       .map(
                         (cuisine) =>
-                          `<span style="font-size: 0.8em; color: rgba(0,0,0,0.8); background-color: #efefef; padding: 4px; border-radius: 1em; display: flex; align-items: center;">${escapeXML(
+                          `<span style="font-size: 0.8em; color: ${
+                            theme.tertiaryFontColor
+                          }; background-color: ${
+                            theme.container.darkerBgColor
+                          }; padding: 4px; border-radius: 1em; display: flex; align-items: center;">${escapeXML(
                             cuisine.name
                           )}${
                             cuisineToEmoji(cuisine.uniqueName)

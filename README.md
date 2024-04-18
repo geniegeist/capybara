@@ -18,11 +18,20 @@ Usage:
 
 ### Demo
 
-Want to try this out with your own postcode? Here is a playground for you: [Just create a new issue](https://github.com/geniegeist/capybara/issues/new/choose), enter the postcode and discover restaraunts while browsing for Github repository :)
+Want to try this out with your own postcode? Here is a playground for you: [Just create a new issue](https://github.com/geniegeist/capybara/issues/new/choose), enter the postcode and discover restaraunts while browsing Github repositories 😊
 
 ### Is this production ready?
 
 Sure, I truely believe this will revolutionize Github and turn it into a global food discovery service for hungry developers.
+
+### Features
+
+- Embed restaurants into your Github README ✅
+- Custom themes ✅
+- Animations ✅
+- Limit number of restaurants ✅
+- Order by rating ✅
+- Cache (to do)
 
 ### Known issues
 
@@ -52,3 +61,25 @@ Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/m11
 Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/ox1/svg?orderby=rating`
 
 ![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/ox1/svg?orderby=rating&limit=3)
+
+#### theme
+
+- possible values: `default`, `bim`, `github-dark`, `github-light`, `wild-cherry`
+
+Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=github-light`
+
+bim
+
+![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=bim&limit=1)
+
+github-dark
+
+![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=github-dark&limit=1)
+
+github-light
+
+![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=github-light&limit=1)
+
+wild-cherry
+
+![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=wild-cherry&limit=1)
