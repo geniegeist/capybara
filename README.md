@@ -27,6 +27,7 @@ Sure, I truely believe this will revolutionize Github and turn it into a global 
 ### Features
 
 - Embed restaurants into your Github README ✅
+- Link to restaurant websites ✅
 - Custom themes ✅
 - Animations ✅
 - Limit number of restaurants ✅

@@ -1,5 +1,6 @@
 export type Restaurant = {
   name: string;
+  link: string;
   address: {
     city: string;
     firstLine: string;

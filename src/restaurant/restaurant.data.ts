@@ -8,6 +8,7 @@ import NodeCache from 'node-cache';
 type RestaurantPayload = {
   id: string;
   name: string;
+  uniqueName: string;
   address: {
     city: string;
     firstLine: string;
@@ -52,7 +53,12 @@ export default class RestaurantData implements RestaurantDataFetcher {
     options?: { orderby?: string }
   ) {
     const handleRestaurantsData = (payload: RestaurantPayload[]) => {
-      const restaurants = payload.slice(0, limit);
+      const restaurants = payload.slice(0, limit).map((restaurant) => {
+        return {
+          ...restaurant,
+          link: `https://www.just-eat.co.uk/restaurants-${restaurant.uniqueName}`,
+        };
+      });
 
       if (options?.orderby === 'rating') {
         restaurants.sort((a, b) => {
