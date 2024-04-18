@@ -18,4 +18,18 @@ describe('RestaurantData', async () => {
     const res = await fetcher.getRestaurantsByPostalCode('EC4M7RF', 5);
     expect(res.restaurants.length).toBe(5);
   });
+
+  it('fetches restaurants sorted by rating', async () => {
+    const httpClient = HttpFactory.create();
+    const fetcher = new RestaurantData(httpClient, apiEndpoint);
+    const res = await fetcher.getRestaurantsByPostalCode('EC4M7RF', 10, {
+      orderby: 'rating',
+    });
+
+    for (let i = 0; i < res.restaurants.length - 1; i++) {
+      expect(res.restaurants[i].rating.starRating).toBeGreaterThanOrEqual(
+        res.restaurants[i + 1].rating.starRating
+      );
+    }
+  });
 });

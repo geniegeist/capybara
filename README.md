@@ -32,6 +32,8 @@ Sure, I truely believe this will revolutionize Github and turn it into a global 
 
 ### Available parameters
 
+All parameters are optional.
+
 #### limit
 
 - number of restaurants to display
@@ -41,3 +43,12 @@ Sure, I truely believe this will revolutionize Github and turn it into a global 
 Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/m11ag/svg?limit=1`
 
 ![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/m11ag/svg?limit=1)
+
+#### orderby
+
+- possible values: `rating`
+- note that it first selects restaurants, then orders them (it does not order all restaurants by rating and then select them)
+
+Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/ox1/svg?orderby=rating`
+
+![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/ox1/svg?orderby=rating&limit=3)

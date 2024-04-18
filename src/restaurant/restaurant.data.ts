@@ -43,12 +43,32 @@ export default class RestaurantData implements RestaurantDataFetcher {
     this.apiEndpoint = apiEndpoint;
   }
 
-  async getRestaurantsByPostalCode(postalCode: string, limit = 10) {
+  async getRestaurantsByPostalCode(
+    postalCode: string,
+    limit = 10,
+    options?: { orderby?: string }
+  ) {
     return this.httpClient
       .get<RestaurantsByPostalCodeResponse>(`${this.apiEndpoint}/${postalCode}`)
       .then((response) => {
+        const restaurants = response.data.restaurants.slice(0, limit);
+
+        if (options?.orderby === 'rating') {
+          restaurants.sort((a, b) => {
+            if (a.rating.starRating === null) {
+              return 1;
+            }
+
+            if (b.rating.starRating === null) {
+              return -1;
+            }
+
+            return b.rating.starRating - a.rating.starRating;
+          });
+        }
+
         const res: GetRestaurantsByPostalCodeResult = {
-          restaurants: response.data.restaurants.slice(0, limit),
+          restaurants,
         };
 
         return res;
