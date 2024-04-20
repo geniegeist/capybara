@@ -82,10 +82,19 @@ font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
                   return `
                   <div class="item animated">
                     <a href="${restaurant.link}" target="_blank" style="">
-                    <div style="display: flex; flex-direction: row;">
+                    <div style="display: flex; flex-direction: row; align-items: center;">
                       <p style="font-weight: bold;">${escapeXML(
                         restaurant.name
                       )}</p>
+                      ${
+                        restaurant.isOpenForDelivery ||
+                        restaurant.isOpenForCollection
+                          ? `<p style="opacity: 0.7; margin-left: 0.5em; color: ${theme.tertiaryFontColor}"> / Open</p>
+                        <div style="opacity: 0.7; margin-left: 0.5em; width:8px; height: 8px; background-color: #0abb72; border-radius: 4px;" />`
+                          : `<p style="opacity: 0.7; margin-left: 0.5em; color: ${theme.tertiaryFontColor}"> / Closed</p>
+                        <div style="opacity: 0.7; margin-left: 0.5em; width:8px; height: 8px; background-color: #FF4130; border-radius: 4px;" />
+`
+                      }
                       <div style="margin-left: auto; display: flex; flex-direction: row;">
                         <p style="color: ${theme.starFontColor}">
                           ${restaurant.rating.starRating}

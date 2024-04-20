@@ -27,6 +27,8 @@ type RestaurantPayload = {
     name: string;
     uniqueName: string;
   }[];
+  isOpenNowForCollection: boolean;
+  isOpenNowForDelivery: boolean;
 };
 
 type RestaurantsByPostalCodeResponse = {
@@ -44,7 +46,7 @@ export default class RestaurantData implements RestaurantDataFetcher {
   constructor(httpClient: HttpClient, apiEndpoint: string) {
     this.httpClient = httpClient;
     this.apiEndpoint = apiEndpoint;
-    this.cache = new NodeCache({ stdTTL: 60 * 60 * 24 }); // 24 hours
+    this.cache = new NodeCache({ stdTTL: 60 * 10 }); // 10 minutes
   }
 
   async getRestaurantsByPostalCode(
@@ -57,6 +59,8 @@ export default class RestaurantData implements RestaurantDataFetcher {
         return {
           ...restaurant,
           link: `https://www.just-eat.co.uk/restaurants-${restaurant.uniqueName}`,
+          isOpenForDelivery: restaurant.isOpenNowForDelivery,
+          isOpenForCollection: restaurant.isOpenNowForCollection,
         };
       });
 

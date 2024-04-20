@@ -19,6 +19,8 @@ export type Restaurant = {
     starRating: number;
     userRating: number | null;
   };
+  isOpenForDelivery: boolean;
+  isOpenForCollection: boolean;
 };
 
 export type GetRestaurantsByPostalCodeResult = {
