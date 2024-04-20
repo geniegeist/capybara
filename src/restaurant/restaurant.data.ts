@@ -101,7 +101,7 @@ export default class RestaurantData implements RestaurantDataFetcher {
       .catch((error: any) => {
         if (error.response) {
           if (error.response.status === 404) {
-            // TO-DO: error handling
+            throw new InvalidPostcalCodeError();
           }
         }
 

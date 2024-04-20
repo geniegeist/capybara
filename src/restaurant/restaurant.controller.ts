@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import sanitizeHtml from 'sanitize-html';
 import RestaurantData, { InvalidPostcalCodeError } from './restaurant.data';
 import HttpClientFactory from '../lib/httpClient';
 import { RestaurantSVGFactory } from './restaurant.svg';
@@ -36,7 +37,15 @@ export const svgRestaurantsByPostalCode: RequestHandler = async (req, res) => {
       orderby: orderby,
     });
     if (data.restaurants.length === 0) {
-      res.status(404).json({ message: 'No restaurants found' });
+      const svg = RestaurantSVGFactory.createNotFound(
+        sanitizeHtml(postalCode),
+        { theme }
+      );
+      res.setHeader('Content-Type', 'image/svg+xml');
+      if (CACHE_MAX_AGE) {
+        res.setHeader('Cache-Control', `public, max-age=${CACHE_MAX_AGE}`);
+      }
+      res.send(svg);
       return;
     }
     const svg = RestaurantSVGFactory.create(data.restaurants, { theme });
@@ -47,7 +56,17 @@ export const svgRestaurantsByPostalCode: RequestHandler = async (req, res) => {
     res.send(svg);
   } catch (e: any) {
     if (e instanceof InvalidPostcalCodeError) {
-      res.status(404).json({ message: 'Invalid postal code' });
+      const svg = RestaurantSVGFactory.createNotFound(
+        sanitizeHtml(postalCode),
+        {
+          theme,
+        }
+      );
+      res.setHeader('Content-Type', 'image/svg+xml');
+      if (CACHE_MAX_AGE) {
+        res.setHeader('Cache-Control', `public, max-age=${CACHE_MAX_AGE}`);
+      }
+      res.send(svg);
     } else {
       res.status(500).json({ message: e.message });
     }

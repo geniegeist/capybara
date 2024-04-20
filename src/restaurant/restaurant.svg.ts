@@ -137,4 +137,76 @@ font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 
       </svg>
     `;
   },
+
+  createNotFound(postalCode, options) {
+    const theme = RestaurantTheme[options?.theme ?? 'default'];
+
+    return `
+      <svg width="500px" height="${
+        90 + 20
+      }px" xmlns="http://www.w3.org/2000/svg">
+        <foreignObject width="100%" height="${90 + 20}px">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="height: 100%;"> 
+            <style> 
+              @keyframes fadeInUp {
+                from {
+                  opacity: 0;
+                  transform: translate3d(0, 40%, 0);
+                }
+                to {
+                  opacity: 1;
+                  transform: none;
+                }
+              }
+
+              .container {
+                border-radius: 8px;
+font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+                font-weight: 500;
+                font-size: 12px;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                height: 100%;
+                background-color: ${theme.container.bgColor};
+                color: ${theme.primaryFontColor};
+              }
+
+              .container p {
+                margin: 0;
+                padding: 0;
+              }
+
+              .item {
+                padding: 0.5em 1em;
+                opacity: 0;
+                border-radius: 8px;
+                transition: background-color 0.3s;
+              }
+
+              .item.animated {
+                animation-name: fadeInUp;
+                animation-duration: 0.75s;
+                animation-fill-mode: forwards;
+              }
+            </style>
+
+            <div class="container">
+              <div class="item animated">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                  <p style="font-weight: bold; font-size: 1.5rem; margin-bottom: 0.25em; color: ${
+                    theme.primaryFontColor
+                  }">404 ${`(╯°□°)╯`}</p>
+                  <p style="color: ${
+                    theme.secondaryFontColor
+                  }">No restaurants found for ${postalCode}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </foreignObject>
+      </svg>
+    `;
+  },
 };

@@ -33,10 +33,12 @@ Sure, I truely believe this will revolutionize Github and turn it into a global 
 - Limit number of restaurants ✅
 - Order by rating ✅
 - Cache ✅
+- 404 ✅
 
 ### Known issues
 
 - Only works with UK postcodes
+- Not mobile friendly
 
 ## API
 
@@ -84,3 +86,9 @@ github-light
 wild-cherry
 
 ![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=wild-cherry&limit=1)
+
+### 404
+
+When no restaurants are found, a 404 image is returned.
+
+![404](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/INVALID_POST_CODE/svg?theme=github-light)

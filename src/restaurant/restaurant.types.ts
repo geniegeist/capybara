@@ -35,4 +35,5 @@ export interface RestaurantDataFetcher {
 
 export interface RestaurantSVGFactory {
   create: (restaurants: Restaurant[], options?: { theme?: string }) => string;
+  createNotFound: (postalCode: string, options?: { theme?: string }) => string;
 }
