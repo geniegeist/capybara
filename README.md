@@ -13,7 +13,7 @@ Endpoint: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/:p
 Usage:
 
 ```
-![Restaurants for postal code EC4M7RF](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/EC4M7RF/svg)
+![Restaurants](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/EC4M7RF/svg)
 ```
 
 ### Demo
@@ -54,7 +54,7 @@ All parameters are optional.
 
 Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/m11ag/svg?limit=1`
 
-![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/m11ag/svg?limit=1)
+![Restaurants](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/m11ag/svg?limit=1)
 
 #### orderby
 
@@ -63,7 +63,7 @@ Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/m11
 
 Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/ox1/svg?orderby=rating`
 
-![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/ox1/svg?orderby=rating&limit=3)
+![Restaurants](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/ox1/svg?orderby=rating&limit=3)
 
 #### theme
 
@@ -73,22 +73,73 @@ Example: `https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN1
 
 bim
 
-![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=bim&limit=1)
+![Restaurants](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=bim&limit=1)
 
 github-dark
 
-![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=github-dark&limit=1)
+![Restaurants](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=github-dark&limit=1)
 
 github-light
 
-![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=github-light&limit=1)
+![Restaurants](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=github-light&limit=1)
 
 wild-cherry
 
-![Restauranta](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=wild-cherry&limit=1)
+![Restaurants](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/BN11AD/svg?theme=wild-cherry&limit=1)
 
 ### 404
 
 When no restaurants are found, a 404 image is returned.
 
 ![404](https://capybara-gq2i.onrender.com/api/v1/restaurants/bypostalcode/INVALID_POST_CODE/svg?theme=github-light)
+
+## Assignment Criteria for JET challenge
+
+### Installation
+
+1. Clone this repository
+2. Run `pnpm install` (alternatively `npm install`)
+3. Create a `.env` file with the following content:
+
+```
+CACHE_MAX_AGE=0
+API_ENDPOINT=https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/
+```
+
+4. Run `pnpm dev` (alternatively `npm run dev`)
+
+### Architecture
+
+![Architecture](./docs/architecture.png)
+
+### Assumptions
+
+- There is a request limit for the JET API; hence a cache is implemented to reduce the number of requests
+- The discovery endpoint of JET API displays the most relevant restaurants first; hence we do not need to sort the restaurants
+- The JET API may return closed restaurants; hence we show an indicator in the image if a restaurant is closed
+- Displaying data in an appealing way is important; hence we added animations and a cool monospace font
+- The target audience is a hungry developer; hence themes are available since developers love themes and customizations ❤️
+
+### Things that were unclear
+
+- How are restaurants in the Just Eat Takeaway response sorted?
+
+### Possible Improvements
+
+- Make it mobile responsive 📱
+- Filter for cuisines
+- Automatically switch to dark mode because developers are night owls 🦉
+- Make the theme and all the colors customizable using query parameters 🌈
+- Pagination
+- Write more unit and integration tests
+- Set up CI/CD with Github Actions
+- Cache image on server (maybe use a reverse proxy or a CDN; although Github already caches images for repositories)
+- Maybe compress SVG before sending it to the client
+
+### Why embed restaurants into a Github README?
+
+I believed this was the simplest way to showcase how I would display restaurants in a real-world scenario under the assumptions that I made. No frontend needed, just use a Github repository. Since a repository was required anyway for this challenge, I use this repository to showcase the functionality.
+
+Additionally, it was a fun and creative way to present the solution. I also learnt how to display dynamic content in a static markdown file. I hope you enjoyed it as much as I did creating it 😊
+
+Don't forget to try it out with your own postcode by creating a new issue [here](https://github.com/geniegeist/capybara/issues/new/choose) 🍕
